@@ -1,11 +1,11 @@
 ---
-title: "Cheatsheets"
+title: "Julia resources"
 tags: ["welcome"]
 order: 3
 layout: "md.jlmd"
 ---
 
-# Cheatsheets
+# Julia resources
 
 - [Getting Started with Julia - live](/basic_syntax/).
 - [Fastrack to Julia](https://juliadocs.github.io/Julia-Cheat-Sheet/) cheatsheet.

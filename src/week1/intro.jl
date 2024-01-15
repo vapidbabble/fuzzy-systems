@@ -1,128 +1,118 @@
 ### A Pluto.jl notebook ###
-# v0.19.25
+# v0.19.29
 
 #> [frontmatter]
-#> homework_number = "1"
-#> order = "2.5"
-#> title = "Basic fuzzy logic concepts"
-#> tags = ["module1", "homeworks", "membership functions", "T-norms", "julia programming"]
+#> chapter = 1
+#> section = 1
+#> order = 1
+#> title = "Motivation to fuzzy logic"
+#> tags = ["week1", "fuzzy", "fuzzy logic"]
 #> layout = "layout.jlhtml"
-#> description = "Week 1 homework: introduction to fuzzy logic"
 
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 75b9bee9-7d03-4c90-b828-43e9e946517b
+# ╔═╡ 055ef0df-8ab8-4e54-a476-89d521f29ee0
 using PlutoTeachingTools, PlutoUI
 
-# ╔═╡ e022e3ce-15d1-11ee-2c26-a506ce7d9895
-md"""
-# Sample Homework
+# ╔═╡ 4f643fd4-1e8d-4304-961b-a30a37a58de3
+TableOfContents()
 
-This notebook showcases some of the features of [`PlutoTeachingTools.jl`](https://github.com/JuliaPluto/PlutoTeachingTools.jl) and how to use these to write homework assignment in Pluto.
+# ╔═╡ c8827b34-95c5-4b27-aef7-1dd21d38100b
+md"""
+## Why Fuzzy Logic?
+
 """
 
-# ╔═╡ 2504b43f-f435-4dc6-8fe1-ce2df23ccfc1
-tip(md"""For a deeper tour of `PlutoTeachingTools.jl`, check their [documentation](https://juliapluto.github.io/PlutoTeachingTools.jl/example.html)""")
-
-# ╔═╡ 98c25807-6acd-4d79-8b6d-a335f7d8395a
-md"""
-## Useful functionalities
-
-`PlutoTeachingTools.jl` has some functions like `correct`, `still_missing`, here a few demoes
+# ╔═╡ c2537ded-7569-4469-95e5-0139c0d5c612
+html"""
+<iframe width="560" height="315" src="https://www.youtube.com/embed/HMpsJpX4i5A?si=_teOTO4AL3Kd7ARE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 """
 
-# ╔═╡ 4a6009fb-337e-4246-a086-a1571915bfef
-correct()
-
-# ╔═╡ 48090c34-8972-4ace-b9fc-d34fb609c4f9
-still_missing()
-
-# ╔═╡ 71f176dd-27d7-4856-be4f-23c2a8815f24
-keep_working()
-
-# ╔═╡ 520d73e9-0a29-4a00-9812-307e80cc061c
-keep_working(md"you can also give custom text to the boxes")
-
-# ╔═╡ c52bc95d-d195-48c9-92f2-fa6970387940
-hint(md"this is a hint, hover the box to unblur the text")
-
-# ╔═╡ f31da618-dd0c-4adb-a8ba-924a5722848c
+# ╔═╡ b478892e-caf8-4cbd-90d9-41a29915c289
 md"""
-## Exercise 1: a simple exercise
-
-Replace missing with the value `1`.
+$(Markdown.Admonition("danger", "Stop and think! What went wrong with Sylvester thinking? ", [md"Sylvester saw a bunch of cookies and thought -- Oh wow, a lot of cookies, if I take only one there is still a lot and nobody will notice. I can take one and still a lot... and one... and one... and one... and one... and ended up with stomach ache"
+]))
 """
 
-# ╔═╡ 0d208bc6-88fa-43b8-9b33-a6453ec23a71
-x = missing
-
-# ╔═╡ 60c02a2a-1ea6-4629-842e-a00e45673ef1
-if ismissing(x)
-	still_missing()
-elseif x == 1 && x isa Int
-	correct()
-elseif x == 1 && !(x isa Int)
-	b1 = almost(md"""Your variable has the right value, but it's not quite the right answer. Read carefully the instructions""")
-	b2 = hint(md"""What type should the value of x be?""")
-	md"""
-	$b1
-	$b2
-	"""
-else
-	keep_working(md"""That is not the right answer! Keep trying!""")
-end
-
-# ╔═╡ 110bcb95-04c2-4e5c-94ef-3c402eabf235
+# ╔═╡ b80d685d-bba7-4832-9cc9-8c0b266b8a8e
 md"""
-here is a short demo of how it looks like when the student tries to solve the exercise
+
+### Limitations of Traditional Logic
+
+#### Example 1
+The previous video is actually just a (cuter) example of the famous [Sororites paradox](https://en.wikipedia.org/wiki/Sorites_paradox) attributed to the greek philosopher [Eubulides](https://en.wikipedia.org/wiki/Eubulides) from the 4th century BCE. In a nutshell the paradox asks
+
+> **When does a heap of sand stop being a heap of sand?**
+
+The paradox argues
+
+- **Assumption 1**: 1,000,000 grains of sand are a heap
+- **Assumption 2**: If you take a single grain of sand from a heap, you still have a heap of sand
+
+Now by induction we get
+
+- I have 1,000,000 grains of sand, hence I have a heap
+- I take one grain away, I have 999,999 grains of sand, I still have a heap
+- I take one grain away, I have 999, 998 grains of sand, I still have a heap
+- ...
+- ...
+- I take one grain away, I have 1 grain of sand, I still have a heap of sand
+- I take one grain away, I have no sand, I still have a heap of sand (**wtf??**)
+
+#### Example 2
+
+> Is it cold?
+
+We ask a friend the statement "is it cold?" is it true or false?
+
+- If the temperature is -40 C, everyone would agree it is cold
+- If the temperature is +40 C, everyone would agree it is not cold
+- What if the temperature is, say, 10 C?
+  - People in Finland would probably say it is not cold
+  - People in California would say it is cold
+  - Let us suppose it is cold, so being 10 C and being -40 are both true the same way?
+
+What do these example have in common? They both work with **imprecise statement** (a lot of cookies, a heap of sand, cold).
+
+In **traditional logic**, statements can only be true (1) or false (0). Humans, however, think in an imprecise way and we have a lot of **vague concepts** in everyday life. In the example above, the statement "-40 degree is cold" should be "more true" than "10 degrees is true".
+
+Think of a mechanician, he knows **by experience** what to do when the pressure is high, when the radiator temperature is cold and so on and so on. Can we use the mechanician experience to teach a machine to do the same? To do so, we need to model vague predicates like "the pressure is high".
+
+### Fuzzy Logic
+
+Here enters **fuzzy logic**, in fuzzy logic a statement is not simply true (1) or false (0), but *the truth value can be anything in between*.
+
+That is, with fuzzy logic we can say that "-40 degrees is cold" is 100% true, while "10 degrees is cold" is 50% true. In the Sorites paradox above, we start with a true statement, but each step of the induction decreases the truth value of the statement, becoming slowing but continuously less true, until becoming 100% false (no sand is not a heap of sand).
+
+**Why is this cool?**
+
+Fuzzy logic gives a mathematical framework for **vagueness**, it allows us to model and formalize humans imprecise thinking. Statements like "if the pressure is high, put a lot of water" become something a computer can understand and execute.
+
+### History and Applications of Fuzzy Logic
+
+While mathematicians had started getting interested in fuzzy logic (sometimes called by mathematician "infinite-value logic"), it started becoming more famous when in 1965 Lofti Zadeh published his seminal paper *Fuzzy Sets*.
+
+In his paper, Zadeh showed that fuzzy sets and imprecise statements could be applied to control theory. In his work, Zadeh argued that one could solve control theory problems relying on humans expertise and using fuzzy logic to mathematically formalize this expertise into a controller.
+
+To get a taste, check out the following video, where I presented [FuzzyLogic.jl](https://lucaferranti.com/FuzzyLogic.jl/dev) and show a small demo on how to use it to stabilize an inverted pendulum
 """
 
-# ╔═╡ 18014fde-b056-42f1-9dc8-f0b935a8630c
-Resource("https://user-images.githubusercontent.com/49938764/249749643-8cc12de3-2b50-4182-b95d-686c2c18332c.mov", :width => 500, :autoplay => "", :loop => "")
+# ╔═╡ 707b27f0-a9f0-4a12-b31a-ca15aa3a99b0
+html"""
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6WfX3e-aOBc?si=xq3b83M87ZqRHWnt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-# ╔═╡ 9f1cc6fd-d3ac-41a1-a761-897f421ce2f0
-md"""
-## Exercise 2
-
-Write a function called `myfun` that takes as input an integer and returns its square.
-
-Define a variable called `y` and assign `myfun(3)` to it.
 """
 
-# ╔═╡ d56b3483-c1c8-4f31-929f-3d6e2b1124f4
-let
-if !@isdefined(myfun)
-	func_not_defined(:myfun)
-else
-	test_values = [1, 2, 3, 4, 5]
-	msg1 = correct()
-	for t in test_values
-		if myfun(t) != t^2
-			msg1 = keep_working(md"Test failed for input $t, expected $(t^2), but got $(myfun(t))")
-			break
-		end
-	end
-	msg1
-end
-end
-
-# ╔═╡ 10fc3ffd-e4ec-40ab-b645-769d376794fe
-if !@isdefined(y)
-	var_not_defined(:y)
-elseif y == 9
-	correct()
-else
-	keep_working(md"Evaluated expression y = $y is incorrect.")
-end
-
-# ╔═╡ 9e18fc7b-758a-4a63-8550-e04296cbea04
+# ╔═╡ 0d69d11f-b6ab-414f-8668-d7f147850f33
 md"""
-and here is a quick demo of the exercise in action
-"""
+Since Zadeh introduction, fuzzy logic has continued to grow in popularity and has been very successful in several engineering fields, such as control theory, data analysis, signal processing, knowledge representation, databases.
 
-# ╔═╡ 2fde68f8-7705-4e6f-84e4-27d720e7ab95
-Resource("https://user-images.githubusercontent.com/49938764/249748007-d0b2d773-6b21-49d4-89db-ad737af510fe.mov", :width => 500, :autoplay => "", :loop => "")
+One important aspect of fuzzy logic, is that it uses words and human understandable concepts hence in my opinion we will see a new growing interest in fuzzy logic with the current trend in explainable AI.
+
+$(Markdown.Admonition("danger", "Stop and think! Fuzzy Logic vs Probability? ", [md"What is the difference between fuzzy logic and probability theory? They both deal with uncertainty, but how do they differ?"
+]))
+"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -139,7 +129,7 @@ PlutoUI = "~0.7.51"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.9.1"
+julia_version = "1.9.4"
 manifest_format = "2.0"
 project_hash = "525dcfd80d74b547385aa255d2a38f1acddad3f3"
 
@@ -174,7 +164,7 @@ version = "0.11.4"
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.0.2+0"
+version = "1.0.5+0"
 
 [[deps.Dates]]
 deps = ["Printf"]
@@ -264,12 +254,12 @@ version = "0.15.21"
 [[deps.LibCURL]]
 deps = ["LibCURL_jll", "MozillaCACerts_jll"]
 uuid = "b27032c2-a3e7-50c8-80cd-2d36dbcbfd21"
-version = "0.6.3"
+version = "0.6.4"
 
 [[deps.LibCURL_jll]]
 deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll", "Zlib_jll", "nghttp2_jll"]
 uuid = "deac9b47-8bc7-5906-a0fe-35ac56dc84c0"
-version = "7.84.0+0"
+version = "8.4.0+0"
 
 [[deps.LibGit2]]
 deps = ["Base64", "NetworkOptions", "Printf", "SHA"]
@@ -278,7 +268,7 @@ uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
 [[deps.LibSSH2_jll]]
 deps = ["Artifacts", "Libdl", "MbedTLS_jll"]
 uuid = "29816b5a-b9ab-546f-933c-edad1886dfa8"
-version = "1.10.2+0"
+version = "1.11.0+1"
 
 [[deps.Libdl]]
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
@@ -346,7 +336,7 @@ version = "2.7.1"
 [[deps.Pkg]]
 deps = ["Artifacts", "Dates", "Downloads", "FileWatching", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Serialization", "TOML", "Tar", "UUIDs", "p7zip_jll"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
-version = "1.9.0"
+version = "1.9.2"
 
 [[deps.PlutoHooks]]
 deps = ["InteractiveUtils", "Markdown", "UUIDs"]
@@ -481,7 +471,7 @@ version = "5.8.0+0"
 [[deps.nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850ede-7688-5339-a07c-302acd2aaf8d"
-version = "1.48.0+0"
+version = "1.52.0+1"
 
 [[deps.p7zip_jll]]
 deps = ["Artifacts", "Libdl"]
@@ -490,24 +480,13 @@ version = "17.4.0+0"
 """
 
 # ╔═╡ Cell order:
-# ╠═75b9bee9-7d03-4c90-b828-43e9e946517b
-# ╟─e022e3ce-15d1-11ee-2c26-a506ce7d9895
-# ╟─2504b43f-f435-4dc6-8fe1-ce2df23ccfc1
-# ╟─98c25807-6acd-4d79-8b6d-a335f7d8395a
-# ╠═4a6009fb-337e-4246-a086-a1571915bfef
-# ╠═48090c34-8972-4ace-b9fc-d34fb609c4f9
-# ╠═71f176dd-27d7-4856-be4f-23c2a8815f24
-# ╠═520d73e9-0a29-4a00-9812-307e80cc061c
-# ╠═c52bc95d-d195-48c9-92f2-fa6970387940
-# ╟─f31da618-dd0c-4adb-a8ba-924a5722848c
-# ╠═0d208bc6-88fa-43b8-9b33-a6453ec23a71
-# ╠═60c02a2a-1ea6-4629-842e-a00e45673ef1
-# ╟─110bcb95-04c2-4e5c-94ef-3c402eabf235
-# ╟─18014fde-b056-42f1-9dc8-f0b935a8630c
-# ╟─9f1cc6fd-d3ac-41a1-a761-897f421ce2f0
-# ╠═d56b3483-c1c8-4f31-929f-3d6e2b1124f4
-# ╠═10fc3ffd-e4ec-40ab-b645-769d376794fe
-# ╟─9e18fc7b-758a-4a63-8550-e04296cbea04
-# ╟─2fde68f8-7705-4e6f-84e4-27d720e7ab95
+# ╟─055ef0df-8ab8-4e54-a476-89d521f29ee0
+# ╟─4f643fd4-1e8d-4304-961b-a30a37a58de3
+# ╟─c8827b34-95c5-4b27-aef7-1dd21d38100b
+# ╟─c2537ded-7569-4469-95e5-0139c0d5c612
+# ╟─b478892e-caf8-4cbd-90d9-41a29915c289
+# ╟─b80d685d-bba7-4832-9cc9-8c0b266b8a8e
+# ╟─707b27f0-a9f0-4a12-b31a-ca15aa3a99b0
+# ╟─0d69d11f-b6ab-414f-8668-d7f147850f33
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

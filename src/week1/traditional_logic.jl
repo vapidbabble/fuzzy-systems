@@ -1,13 +1,12 @@
 ### A Pluto.jl notebook ###
-# v0.19.25
+# v0.19.29
 
 #> [frontmatter]
-#> chapter = 2
+#> chapter = 1
 #> section = 2
 #> order = 2
-#> image = "https://raw.githubusercontent.com/fonsp/Pluto.jl/580ab811f13d565cc81ebfa70ed36c84b125f55d/demo/plutodemo.gif"
-#> title = "Add Pluto notebooks"
-#> tags = ["module2", "track_julia", "track_material", "Pluto", "PlutoUI"]
+#> title = "Recap of classical propositional logic"
+#> tags = ["week1", "propositional logic"]
 #> layout = "layout.jlhtml"
 
 using Markdown
@@ -21,111 +20,64 @@ TableOfContents()
 
 # ╔═╡ acdd466e-14f5-11ee-1921-93e6c67d7ec4
 md"""
-## Add Pluto notebooks
+In classical propositional logic, a proposition (statement) $P$ can be either `true` or `false`. Propositions can be combined using logical connectives $\neg, \land, \lor, \rightarrow, \leftrightarrow$
 
-[Pluto.jl](https://plutojl.org/) is a revolutionary text-editor for reactive and interactive programming.
+### Negation
 
-To start creating a Pluto notebook, open a terminal and launch Julia, then do
+The statement ``\neg A`` is the *negation* of ``A``, represented by the following truth table
 
-```julia
-using Pluto; Pluto.run()
-```
+|``A``| ``\neg A``|
+|:---:|:--------:|
+| 0 | 1 |
+| 1 | 0 |
 
-This will launch a Pluto session, where you can write your notebook.
+### Conjunction
 
-To add the front-matter, you can use Plut FrontmatterGUI, as the following short video clip shows.
+The statement ``A \land B`` means that both ``A`` and ``B`` are true. This can be represented by the following truth table
 
-$(danger(md"For pluto notebooks, you will need to set layout to layout.jlhtml"))
-"""
+|``A`` | ``B`` | ``A \land B`` |
+|:----:|:----:|:----------:|
+| 0 | 0 | 0 |
+| 0 | 1 | 0 |
+| 1 | 0 | 0 |
+| 1 | 1 | 1 |
 
-# ╔═╡ 832a1b2f-42dc-4a5d-9389-9f8f35a1759b
-html"""
-<video controls="controls" width="800" height="600" name="Video Name">
-  <source src="https://user-images.githubusercontent.com/6933510/207080363-b912d591-f6f6-4522-a6fe-701e5ab04f0b.mov">
-</video>"""
+### Disjunction
 
-# ╔═╡ 8656f15c-a603-45f6-8ac6-4941580830e8
-md"""## Pluto 101
+The statement ``A \lor B`` means that either ``A`` or ``B`` is true (but could also both be true). Represented by the following truth table
 
-Pluto is a notebook for Julia! It is **reactive**, **lightweight** and has **powerful interactivity tools**. This will allow you to make your lesson material more engaging for students. Here are a few highlights of Pluto. 
+|``A`` | ``B`` | ``A \lor B`` |
+|:----:|:----:|:----------:|
+| 0 | 0 | 0 |
+| 0 | 1 | 1 |
+| 1 | 0 | 1 |
+| 1 | 1 | 1 |
 
-$(tip(md" To learn more, check out [Pluto featured notebooks](https://featured.plutojl.org/), the JuliaCon video at the beginning of this notebook, or the presentations at [PlutoCon 2021](https://www.youtube.com/playlist?list=PLP8iPy9hna6T5sNOTeGdiqygHe_09geEW)."))
-### Writing code in Pluto
-
-In Pluto code is written in cells, to add some code, simply create a new cell and type in. Each cell should contain 1 julia expression (function definition, if-statement, variable assignment, etc.).
-
-```julia
-if rand() > 0.5
-  "hi"
-else
-  "there"
-end
-```
-
-or
-
-```julia
-a = 1
-```
-
-or
-
-```julia
-function f()
- return rand() ^ 2
-end
-```
-
-**However**, multiple expressions in the same cell are not allowed, for example
-
-```julia
-a = 1
-b = 2
-a + b
-```
-
-cannot be written in the same cell. You have two alternatives
-
-1. Split it into multiple cells (recommended to make reactivity better).
-2. Wrap your staments inside a `begin ... end` or `let ... end` block. The difference is that the latter introduces a local scope, hence variables defined inside `let` are not visibles from outside.
-
-### Reactivity
-
-Pluto is reactive! This means that if you define a variable `a` in a cell, when you edit the variable value, all cells depending on that variable are automatically re-evaluated. A few notes
-
-1. As mentioned above, better to have a single variable assignment per cell, this will make the dependency graph slimmer and reactivity smoother.
-2. Code modifying a given variable should be in the same cell, i.e. you cannot have two cells modifying the same variable.
-
-Here is a summarizing demo
-
-"""
-
-# ╔═╡ ba9f13cc-bf18-4589-9e89-3d5c869e158f
-Resource("https://raw.githubusercontent.com/fonsp/Pluto.jl/580ab811f13d565cc81ebfa70ed36c84b125f55d/demo/plutodemo.gif", :width => 350)
-
-# ╔═╡ d97ae81e-fd53-4b0a-a990-abf173b0c1ab
-md"""
-### Built-in environment
-
-Pluto is designed with reproducibility in mind! 
-
-To use packages registered in the Julia general registry, just type `using MyPackage` in some cells, as done at the beginning of this notebook. Pluto will automatically download the package!
-
-The `Project.toml` and `Manifest.toml` (what Julia uses to record all libraries, their versions and dependencies) are stored inside the notebook, making it fully batteries included!
-
-$(Resource("https://user-images.githubusercontent.com/6933510/134823403-fbb79d7f-dd3e-4712-b5d5-b48ad0770f13.gif", :width => 400))
-"""
-
-# ╔═╡ 177b8901-68ad-4319-b4fa-28fb30f3a731
-md"""
-### Interactivity
-
-Pluto has great support to make your notebooks interactive! It allows you to associate variables with sliders and buttons that you can use to interactively change the result of the code.
-
-![](https://user-images.githubusercontent.com/6933510/136196607-16207911-53be-4abb-b90e-d46c946e6aaf.gif)
+### Implication
 
 
-The easiest way to harness the power of Pluto interactivity is to use [PlutoUI.jl](https://github.com/juliapluto/PlutoUI.jl), which is showcased in the [next lecture](https://juliapluto.github.io/mod2_add_material/plutoui_showcase/).
+The statement ``A \rightarrow B`` means ``A`` implies ``B`` (read "If ``A`` then ``B``.) Represented by the following truth table
+
+|``A`` | ``B`` | ``A \rightarrow B`` |
+|:----:|:----:|:----------:|
+| 0 | 0 | 1 |
+| 0 | 1 | 1 |
+| 1 | 0 | 0 |
+| 1 | 1 | 1 |
+
+**Note!**: In "common language" statements like "If it rains, I take the umbrella" are often understood to mean that if it doesn't rain, I don't take the umbrella. This is however incorrect! The implication says that if the premise is true, then the consequence must be true. However, if the premise is false, then the consequence can be either true or false. This is called *principle of explosion* or *ex falso quodlibet* (from false, anything follows).
+
+### Logical equivalence
+
+The statement ``A \leftrightarrow B`` means that ``A`` and ``B`` are logical equivalent, that is whenever ``A`` is true, also ``B`` is true and whenever ``A`` is false, ``B`` is false. It is also read as "``A`` if and only if ``B``". In mathematical literature, this is often abbreviated as "``A`` iff ``B``" (note double f). The trut table is
+
+|``A`` | ``B`` | ``A \rightarrow B`` |
+|:----:|:----:|:----------:|
+| 0 | 0 | 1 |
+| 0 | 1 | 0 |
+| 1 | 0 | 0 |
+| 1 | 1 | 1 |
+
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -143,7 +95,7 @@ PlutoUI = "~0.7.51"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.9.1"
+julia_version = "1.9.4"
 manifest_format = "2.0"
 project_hash = "525dcfd80d74b547385aa255d2a38f1acddad3f3"
 
@@ -178,7 +130,7 @@ version = "0.11.4"
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.0.2+0"
+version = "1.0.5+0"
 
 [[deps.Dates]]
 deps = ["Printf"]
@@ -268,12 +220,12 @@ version = "0.15.21"
 [[deps.LibCURL]]
 deps = ["LibCURL_jll", "MozillaCACerts_jll"]
 uuid = "b27032c2-a3e7-50c8-80cd-2d36dbcbfd21"
-version = "0.6.3"
+version = "0.6.4"
 
 [[deps.LibCURL_jll]]
 deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll", "Zlib_jll", "nghttp2_jll"]
 uuid = "deac9b47-8bc7-5906-a0fe-35ac56dc84c0"
-version = "7.84.0+0"
+version = "8.4.0+0"
 
 [[deps.LibGit2]]
 deps = ["Base64", "NetworkOptions", "Printf", "SHA"]
@@ -282,7 +234,7 @@ uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
 [[deps.LibSSH2_jll]]
 deps = ["Artifacts", "Libdl", "MbedTLS_jll"]
 uuid = "29816b5a-b9ab-546f-933c-edad1886dfa8"
-version = "1.10.2+0"
+version = "1.11.0+1"
 
 [[deps.Libdl]]
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
@@ -350,7 +302,7 @@ version = "2.7.1"
 [[deps.Pkg]]
 deps = ["Artifacts", "Dates", "Downloads", "FileWatching", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Serialization", "TOML", "Tar", "UUIDs", "p7zip_jll"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
-version = "1.9.0"
+version = "1.9.2"
 
 [[deps.PlutoHooks]]
 deps = ["InteractiveUtils", "Markdown", "UUIDs"]
@@ -485,7 +437,7 @@ version = "5.8.0+0"
 [[deps.nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850ede-7688-5339-a07c-302acd2aaf8d"
-version = "1.48.0+0"
+version = "1.52.0+1"
 
 [[deps.p7zip_jll]]
 deps = ["Artifacts", "Libdl"]
@@ -497,10 +449,5 @@ version = "17.4.0+0"
 # ╠═055ef0df-8ab8-4e54-a476-89d521f29ee0
 # ╠═4f643fd4-1e8d-4304-961b-a30a37a58de3
 # ╟─acdd466e-14f5-11ee-1921-93e6c67d7ec4
-# ╟─832a1b2f-42dc-4a5d-9389-9f8f35a1759b
-# ╟─8656f15c-a603-45f6-8ac6-4941580830e8
-# ╟─ba9f13cc-bf18-4589-9e89-3d5c869e158f
-# ╟─d97ae81e-fd53-4b0a-a990-abf173b0c1ab
-# ╟─177b8901-68ad-4319-b4fa-28fb30f3a731
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

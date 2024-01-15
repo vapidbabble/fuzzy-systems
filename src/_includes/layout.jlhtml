@@ -153,11 +153,11 @@ $(pluto_head)
                 </div>
                 <div class="logos">
                     <picture title="$(metadata["course_info"]["institution"])">
-                        <img src="$(root_url)/assets/$(metadata["course_info"]["institution_logo"])">
+                        <img width="100%" src="$(root_url)/assets/$(metadata["course_info"]["institution_logo"])">
                     </picture>
                     <picture title="Julia Programming Language">
                         <source srcset="$(root_url)/assets/julia-logo-dark.svg" media="(prefers-color-scheme: dark)" />
-                        <img src="$(root_url)/assets/julia-logo-color.svg">
+                        <img width="80%" src="$(root_url)/assets/julia-logo-color.svg">
                     </picture>
                 </div>
             </li>

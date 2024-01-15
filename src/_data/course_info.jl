@@ -1,13 +1,12 @@
 Dict(
-    "course_name" => "Name of your course",
-    "course_subtitle" => "a short catchy phrase about your course",
-    "code" => "code of your course",
-    "semester" => "Fall 20XX",
+    "course_name" => "Fuzzy Systems",
+    "course_subtitle" => "where machine and human reasoning meet",
+    "code" => "ICAT3080",
+    "semester" => "Spring 2024",
     "authors" => [
-        "First author name" => "first author homepage link",
-        "Second author name" => "second author homepage link"
+        "Luca Ferranti" => "https://lucaferranti.com"
     ],
-    "institution" => "Your university (or similar) name",
-    "institution_logo" => "name of your institution logo file, e.g. `logo.svg`. Place this under `assets`",
-    "repo" => "link to the repository of the source code"
+    "institution" => "University of Vaasa",
+    "institution_logo" => "logo.svg",
+    "repo" => "https://github.com/lucaferranti/fuzzy-systems"
 )
