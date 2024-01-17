@@ -231,9 +231,135 @@ $(danger("This definition of convex membership function differs from the definit
 
 # ╔═╡ b88155ab-47ca-46cf-88d0-6c2bc1d8ed9e
 md"""
-### Fuzzy logic connectives
+## Fuzzy logic connectives
 
-tbc
+Let us now learn how we can combine multiple statements using fuzzy logic. First some notation
+
+$(
+Markdown.Admonition("info", "Truth value", [md"Given a proposition ``P``, we write ``\mu(P) = v`` to indicate that the *truth value* of ``P`` is ``v 
+\in [0, 1]``, for example ``\mu(P) = 0.75``"])
+)
+
+Now we can start definiting logical operators
+
+### Negation
+
+While other definitions can be found, we will limit ourselves to the most common one
+
+$(
+Markdown.Admonition("info", "Fuzzy negation", [md"``\mu(\neg P) = 1 - \mu(P)``"])
+)
+
+### Conjunction
+
+There is not a unique definition to define a fuzzy and (conjunction). However, we can define some properties we want it to satisfy and find a *family of functions* satisfying these properties. A function that is a suitable candidate for definition a fuzzy conjunction is called **T-norm**
+
+"""
+
+# ╔═╡ 4753a46d-960a-41b1-8ab0-f6e53d46c785
+let
+def = md"""
+A function ``T: [0, 1] \times [0, 1] \rightarrow [0, 1]`` is a T-norm iff
+
+1. **Commutative**: ``T(x, y) = T(y, x)``
+2. **Associative**: ``T(T(x, y), z) = T(x, T(y, z))``
+3. **Monotone**: if ``x < y`` and ``x' < y'``, then ``T(x, x') < T(y, y')``
+4. **neutral element 1**: ``T(x, 1) = T(x)``
+"""
+
+def_box = Markdown.Admonition("info", "T-norm", [def])
+
+md"""
+$def_box
+"""
+end
+
+# ╔═╡ 04a7c8e9-5fef-4b16-8fca-b224107607cc
+md"""
+Once we have a T-norm, we can define conjunction as
+
+```math
+\mu(P\land Q) = T(\mu(P), \mu(Q))
+```
+
+here are some popular T-norm. You can find a more complete list [here](https://www.lucaferranti.com/FuzzyLogic.jl/dev/api/logical/#Conjuction-methods)
+
+$(
+Markdown.Admonition("danger", "Stop and think", [md"Why is a T-norm a good candidate for defining conjunction? Go through each bullet of the definition and ask yourself, *why do I want this?*"])
+)
+
+#### Minimum T-norm
+
+Also called *Gödel T-norm*: defined as ``T(x, y) = min(x, y)``
+
+#### Łukasiewicz T-norm
+
+Defined as ``T(x, y) = \max(x+y-1, 0)``.
+
+Side note that "Ł" is pronounced "u" as in the English word "do"
+
+#### Product T-norm
+
+Defined as ``T(x, y) = xy``
+"""
+
+# ╔═╡ 9d3e3d6d-4f22-4964-a544-a423546f845c
+md"""
+### Disjunction
+
+Like conjunction, to define **disjunction** (or), we identify a family of suitable candidates, called *S-norm* (or *T-conorm*)
+"""
+
+# ╔═╡ a04f1f46-e41e-47dc-a36d-8c017540140c
+let
+def = md"""
+A function ``S: [0, 1] \times [0, 1] \rightarrow [0, 1]`` is a S-norm iff
+
+1. **Commutative**: ``S(x, y) = S(y, x)``
+2. **Associative**: ``S(T(x, y), z) = S(x, S(y, z))``
+3. **Monotone**: if ``x < y`` and ``x' < y'``, then ``S(x, x') < S(y, y')``
+4. **has neutral elment 0**: ``S(x, 0) = S(x)``
+"""
+
+def_box = Markdown.Admonition("info", "S-norm", [def])
+
+md"""
+$def_box
+
+Note the only difference between a T- and S- norm is the neutral element.
+
+Again, go through the bullet points of the definition and ask yourself why they form a good set of requirements for defining disjunction.
+"""
+end
+
+# ╔═╡ 6d8ac233-2ec1-4e31-bab7-af496faaea5b
+md"""
+Now we list some popular S-norms, a more compehensive list can be found [here](https://www.lucaferranti.com/FuzzyLogic.jl/dev/api/logical/#Disjunction-methods)
+
+- **maximum S-norm**: ``S(x, y) = \max(x, y)``
+- **Bounded sum S-norm**: ``S(x, y) = \min(x+y, 1)``
+- **Probabilistic sum S-norm**: ``S(x, y) = x + y - xy
+
+### Conjunction / Disjunction pair
+
+As you may suspect, T-norms and S-norms come in pairs. That is, once you fix a T-norm for conjunction, you also have a corresponding S-norm for disjunctions. The corresponding S-norm is defined to satisfy the following property.
+
+```math
+S(x, y) = 1 - T(1-x, 1-y)
+```
+
+$(
+Markdown.Admonition("danger", "Stop and think", [md"What is the logical interpretation of the above relation?"])
+)
+
+The following table summarizes how the T- and S-norms presented so far are paired
+
+|T-norm|S-norm|
+|:----:|:----:|
+|Minimum | Maximum |
+|Łukasiewicz|Bounded sum|
+|Product | Probabilistic sum|
+
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -1440,5 +1566,10 @@ version = "1.4.1+1"
 # ╟─e9c48a68-8e53-480a-95a1-2cd494f9f87e
 # ╟─26dc1f94-2ae0-4507-8927-29b13adbf59b
 # ╟─b88155ab-47ca-46cf-88d0-6c2bc1d8ed9e
+# ╟─4753a46d-960a-41b1-8ab0-f6e53d46c785
+# ╟─04a7c8e9-5fef-4b16-8fca-b224107607cc
+# ╟─9d3e3d6d-4f22-4964-a544-a423546f845c
+# ╟─a04f1f46-e41e-47dc-a36d-8c017540140c
+# ╟─6d8ac233-2ec1-4e31-bab7-af496faaea5b
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
