@@ -69,7 +69,7 @@ The statement ``A \rightarrow B`` means ``A`` implies ``B`` (read "If ``A`` then
 
 ### Logical equivalence
 
-The statement ``A \leftrightarrow B`` means that ``A`` and ``B`` are logical equivalent, that is whenever ``A`` is true, also ``B`` is true and whenever ``A`` is false, ``B`` is false. It is also read as "``A`` if and only if ``B``". In mathematical literature, this is often abbreviated as "``A`` iff ``B``" (note double f). The trut table is
+The statement ``A \leftrightarrow B`` means that ``A`` and ``B`` are logical equivalent, that is whenever ``A`` is true, also ``B`` is true and whenever ``A`` is false, ``B`` is false. It is also read as "``A`` if and only if ``B``". In mathematical literature, this is often abbreviated as "``A`` iff ``B``" (note double f). The truth table is
 
 |``A`` | ``B`` | ``A \rightarrow B`` |
 |:----:|:----:|:----------:|
